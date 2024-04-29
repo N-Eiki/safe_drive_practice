@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+      <node pkg="rust_tutorial" exec="pub" name="publisher" output="screen" />
+      <node pkg="rust_tutorial" exec="sub" name="subscriber" output="screen" />
+</launch>
