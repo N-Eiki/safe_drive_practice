@@ -1,0 +1,22 @@
+[package]
+name = "webcam_publisher"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+safe_drive = "0.3"
+rscam = "0.5.5"
+image = "0.23.14"
+imageproc = "0.22.0"
+show-image = {version = "0.14.0", features = ["image"]}
+
+sensor_msgs = {path = "/tmp/.msg/sensor_msgs"}
+
+[package.metadata.ros]
+msg = ["sensor_msgs"]
+
+msg_dir = "/tmp/.msg/"
+
+safe_drive_version = "0.3"
+
+

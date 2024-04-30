@@ -1,13 +1,26 @@
+use safe_drive::{
+    context::Context, error::DynError, logger::Logger, pr_info
+};
+
+use std::time::Duration;
 
 extern crate image;
 extern crate imageproc;
 extern crate rscam;
+use sensor_msgs::msg;
 
 // show images
 extern crate show_image; //::{ImageView, ImageInfo, create_window};
 
 #[show_image::main]
-fn main() {
+fn main() -> Result<(), DynError> {
+    // コンテキストの作成
+    let ctx = Context::new()?;
+    // ノードを作成
+    let node = ctx.create_node("image_publisher", None, Default::default())?;
+    // publisherの作成
+    let publisher = node.create_publisher::<msg::Image>("webcam_image", None)?;
+
     let device = "/dev/video0";
     let mut camera = rscam::new(device).unwrap();
     // setting camera params
@@ -32,7 +45,7 @@ fn main() {
         loop {
             let frame = camera.capture().unwrap();
             let image = show_image::ImageView::new(show_image::ImageInfo::rgb8(height, width), &frame);
-            window.set_image("image-001", &image);
+            let _ = window.set_image("image-001", &image);
         }
 }
 
