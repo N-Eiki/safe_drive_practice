@@ -47,8 +47,8 @@ fn main() -> Result<(), DynError> {
         // show image loop
         loop {
             let frame = camera.capture().unwrap();
-            let image = show_image::ImageView::new(show_image::ImageInfo::rgb8(height, width), &frame);
-            let _ = window.set_image("image-001", &image);
+            // let image = show_image::ImageView::new(show_image::ImageInfo::rgb8(height, width), &frame);
+            // let _ = window.set_image("image-001", &image);
 
             let mut image_msg = msg::Image::new().expect("Failed to create Image message instance");
             let header_ros_string = RosString::<0>::new("camera_frame").unwrap();
@@ -60,8 +60,6 @@ fn main() -> Result<(), DynError> {
             image_msg.height = height;
             image_msg.width = width;
             image_msg.encoding = encoding_ros_string;
-            // image_msg.is_bigendian = 0;
-            // image_msg.step = width * 3; // RGB3フォーマットなので1ピクセルあたり3バイト
             image_msg.data = img_data; // キャプチャしたフレームをバイト列に変換して代入
             let _ = publisher.send(&image_msg);
         }
